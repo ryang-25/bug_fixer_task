@@ -32,7 +32,7 @@ def parse_file(file):
   c = query_call.captures(cursor.node)
   print(cursor.node, c["function_name"][0].text)
 
-  # potential associated comments
+  # we will attach associated comments here
   comments = []
   while cursor.goto_next_sibling():
     match cursor.node.type:
@@ -46,12 +46,7 @@ def parse_file(file):
       case _:
         pass
 
-
-
   # print(node.type)
-
-
-
   # node = ModuleNode(root, file.name)
 
   G = nx.MultiDiGraph()
@@ -59,11 +54,7 @@ def parse_file(file):
   # cursor.goto_first_child()
   # while cursor.goto_next_sibling():
   #   # node
-
-
   #   print(cursor.node)
-
-
   # We can associate comments with file or class nodes.
 
 

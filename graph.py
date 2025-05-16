@@ -131,6 +131,9 @@ class ModuleNode(Node):
     self.path = path
 
 class ClassNode(Node):
+  """
+  A class definition.
+  """
   def add_graph(self, G):
     cursor = self.tree_node.walk()
     cursor.go_to_first_child()
@@ -142,6 +145,9 @@ class ClassNode(Node):
 
 
 class FunctionNode(Node):
+  """
+  A function definition.
+  """
   def add_graph(self, G):
     name = self.tree_node.name.text.decode()
     full_function_name = self.module_name + name
