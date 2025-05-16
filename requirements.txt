@@ -1,0 +1,7 @@
+datasets==3.6.0
+GitPython==3.1.44
+google-adk==0.5.0
+networkx==3.4.2
+toml==0.10.2
+tree-sitter==0.24.0
+tree-sitter-python==0.23.6

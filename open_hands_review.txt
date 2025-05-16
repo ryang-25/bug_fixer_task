@@ -1,0 +1,92 @@
+# Open Hands Review
+
+Roland Yang, South Carolina Governor’s School for Science and Mathematics
+
+## Problem Description
+
+With the rise of large language models (LLMs) for problem solving tasks, AI
+agents—assistants able to perform interactive tasks on a user’s behalf—have
+been incorporated into workflows in domains such as software development and
+web browsing to help automate complex or mundane tasks. As agents grow in
+complexity, capability, and scope, they become increasingly difficult to
+develop and benchmark, rendering them challenging to research and incorporate
+into highly specialized workflows. Multi-agent use cases, where it may be
+beneficial to use specialized models for subtasks, may also complicate this
+further.
+
+## Research Gap
+
+In what ways can we facilitate the development of AI agents that are highly
+capable—able to interact with humans and the environment—and safe? Which
+benchmarks can we standardize to gain a holistic view of agents developed
+within (and outside) of our framework to understand their ability to
+autonomously accomplish complex tasks? How can we build a platform that makes
+multi-agent collaboration easy? What other resources can we provide—such as a
+graphical interface, or a set of general purpose agents—to make research easier
+and to lower the barrier to agent development?
+
+## Technique Description
+
+The OpenHands framework is comprised of three components: an agent
+implementation, an event stream, and an agent runtime. Each agent can make use
+of predefined actions, such as executing code within an interactive Python
+instance, executing code within a Bash shell, interacting with a browser, or
+prompting the user for input. All actions happen within an appropriately
+sandboxed Docker container, which, paired with the ability to run a different
+operating system than the host, makes it a powerful tool for software
+development.
+
+At each step, the agent’s LLM is provided with the state of the event stream
+consisting of previous user input and agent actions, giving models crucial
+context to achieve set goals. In addition to interacting with the environment,
+agents also have the ability to delegate subtasks to other agents by performing
+the appropriate action, allowing purpose-built agents and/or models to receive
+necessary context to execute more powerful tasks.
+
+A set of agents and “skills”—common utility functions—included within the
+framework makes it easier to develop agents that may be similar in scope. A
+benchmark suite of common tasks, such as software engineering, web browsing,
+and other miscellaneous exercises help authors understand how their agents may
+perform.
+
+## Results
+
+The popularity of OpenHands (with >53.6k GitHub stars) and the rate of code
+contributions suggests that it delivers as a viable framework for AI agent
+development. The existence of several community-contributed agents, such as a
+generalist CodeAct agent or a browsing agent that others can improve and use
+give practical, not just theoretical, use. The graphical user interface allows
+for a nearly-seamless integration of OpenHands into workflows that make use in
+AI agent development.
+
+## Limitations
+
+As a testbed for new AI agent research, OpenHands shows promise for accelerating
+agent development. However, the provided agents in the AgentHub are simple and
+do not demonstrate the framework’s full potential, lacking strong motivating
+examples for the multi-agent collaboration capability or a model’s ability to
+ask for elaboration from the user. The benchmarks only demonstrate the agent’s
+ability to perform in the zero-shot scenario, which, in addition to limiting
+one of the marketed advantages of the framework, is not necessarily
+representative of real-world workflows. Further work could incorporate
+benchmarks that include one or multi-shot assistance on a variety of tasks.
+
+While integrating an event stream provides the LLM with highly valuable context,
+the framework only has the ability to detect loops—where models tend to suggest
+identical or highly similar incorrect solutions—not prevent them via some other
+means. The literature suggests that the process of solving complex problems can
+be viewed as a search over a tree, which prevents the types of cycles that a
+naive agent construction suffers from by construction.
+
+Furthermore, long-running tasks can cause the event stream to grow concerningly
+large, which, in concert with an agent’s ability to read binary files, may
+result in the model using an exorbitant amount of tokens. In addition to cost
+and power implications, such a request may exceed the context window of the
+model, effectively limiting the utility of the event stream. Some form of
+compression could be helpful as an economical and information theoretical
+improvement.
+
+Finally, while users can use the iPythonRunCellAction to execute code within a
+Jupyter notebook, this has markedly limited utility for other programming
+languages. A future work could make actions first-class, to allow users to
+extend the framework via custom actions.
